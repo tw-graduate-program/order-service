@@ -33,16 +33,6 @@ public class OrderService {
     }
 
     public void removeById(Long id) {
-        OrderInfo orderInfo = orderRepository.findById(id).get();
-        OrderInfo order = OrderInfo.builder().id(id)
-                .contactId(orderInfo.getContactId())
-                .orderType(orderInfo.getOrderType())
-                .orderStatus(orderInfo.getOrderStatus())
-                .orderFee(orderInfo.getOrderFee())
-                .deliveryFee(orderInfo.getDeliveryFee())
-                .createdAt(orderInfo.getCreatedAt())
-                .deleted(Boolean.TRUE)
-                .build();
-        orderRepository.save(order);
+        orderRepository.removeById(id);
     }
 }

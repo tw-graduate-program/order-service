@@ -98,4 +98,17 @@ class OrderServiceTest {
         verify(orderRepository).save(any(OrderInfo.class));
     }
 
+    @Test
+    void should_logical_delete_order_by_id() {
+        // given
+        Long id = 7L;
+        when(orderRepository.removeById(any(Long.class))).thenReturn(1);
+
+        // when
+        orderService.removeById(id);
+
+        // then
+        verify(orderRepository).removeById(any(Long.class));
+    }
+
 }
