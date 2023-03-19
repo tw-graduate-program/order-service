@@ -10,7 +10,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.verify;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -47,6 +49,21 @@ class OrderServiceTest {
         // then
         assertThat(orders).isEqualTo(List.of(order));
         verify(orderRepository).findAll();
+    }
+
+    @Test
+    void should_return_order_by_id() {
+        // given
+        String id = String.valueOf(77);
+        order.setId(id);
+        when(orderRepository.findById(any(String.class))).thenReturn(Optional.ofNullable(order));
+
+        // when
+        Order orderById = orderService.getOrderById(id);
+
+        // then
+        assertThat(orderById).isEqualTo(order);
+        verify(orderRepository).findById(any(String.class));
     }
 
 }
