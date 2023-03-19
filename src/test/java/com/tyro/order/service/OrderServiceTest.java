@@ -79,6 +79,23 @@ class OrderServiceTest {
 
         // then
         assertThat(actualOrderInfo.getId()).isNotNull();
+        verify(orderRepository).save(any(OrderInfo.class));
+    }
+
+    @Test
+    void should_update_order_by_id() {
+        // given
+        Long id = 77L;
+        OrderInfo mockOrderInfo = orderInfo;
+        mockOrderInfo.setId(id);
+        when(orderRepository.save(any(OrderInfo.class))).thenReturn(mockOrderInfo);
+
+        // when
+        OrderInfo actualOrderInfo = orderService.updateById(id, orderInfo);
+
+        // then
+        assertThat(actualOrderInfo).isEqualTo(mockOrderInfo);
+        verify(orderRepository).save(any(OrderInfo.class));
     }
 
 }
