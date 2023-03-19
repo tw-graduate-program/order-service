@@ -7,9 +7,9 @@ CREATE TABLE `order_info` (
     `order_status`  INT(4),
     `order_fee`     DECIMAL(18,2),
     `delivery_fee`  DECIMAL(18,2),
-    `created_at`    DATETIME     NOT NULL,
-    `updated_at`    DATETIME     NOT NULL,
-    `deleted`       BOOLEAN      NOT NULL
+    `created_at`    DATETIME     NULL,
+    `updated_at`    DATETIME     NULL,
+    `deleted`       BOOLEAN      DEFAULT FALSE NOT NULL
 )
     ENGINE = InnoDB
     DEFAULT CHARSET = utf8mb4;
