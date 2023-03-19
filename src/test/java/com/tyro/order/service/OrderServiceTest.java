@@ -41,14 +41,14 @@ class OrderServiceTest {
     @Test
     void should_return_all_orders() {
         // given
-        when(orderRepository.findAll()).thenReturn(List.of(orderInfo));
+        when(orderRepository.getAllOrders()).thenReturn(List.of(orderInfo));
 
         // when
         List<OrderInfo> orderInfos = orderService.getAllOrders();
 
         // then
         assertThat(orderInfos).isEqualTo(List.of(orderInfo));
-        verify(orderRepository).findAll();
+        verify(orderRepository).getAllOrders();
     }
 
     @Test

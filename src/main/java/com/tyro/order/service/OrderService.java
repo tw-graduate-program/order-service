@@ -16,7 +16,7 @@ public class OrderService {
     }
 
     public List<OrderInfo> getAllOrders() {
-        return orderRepository.findAll();
+        return orderRepository.getAllOrders();
     }
 
     public OrderInfo getOrderById(Long id) {
