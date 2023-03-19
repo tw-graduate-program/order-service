@@ -33,6 +33,6 @@ public class OrderService {
     }
 
     public void removeById(Long id) {
-
+        orderRepository.deleteById(id);
     }
 }
