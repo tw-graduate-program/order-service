@@ -34,4 +34,11 @@ public class OrderController {
     public OrderInfo saveOrder(@RequestBody OrderInfo orderInfo) {
         return orderService.saveOrder(orderInfo);
     }
+
+    @PostMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public OrderInfo updateOrderById(@PathVariable Long id,
+                                     @RequestBody OrderInfo orderInfo) {
+        return orderService.updateById(id, orderInfo);
+    }
 }

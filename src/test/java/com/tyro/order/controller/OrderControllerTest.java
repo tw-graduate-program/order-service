@@ -118,6 +118,28 @@ class OrderControllerTest {
         verify(orderService).saveOrder(any(OrderInfo.class));
     }
 
+    @Test
+    void should_update_order_by_id() throws Exception {
+        // given
+        Long id = 77L;
+        OrderInfo mockOrder = orderInfo;
+        mockOrder.setId(id);
+        when(orderService.updateById(id, orderInfo)).thenReturn(mockOrder);
+
+        // when
+        MvcResult mvcResult = mockMvc.perform(post("/orders/{id}", id)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(orderInfo)))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String response = mvcResult.getResponse().getContentAsString();
+
+        // then
+        assertThat(response).isEqualTo(objectMapper.writeValueAsString(mockOrder));
+        verify(orderService).updateById(any(Long.class), any(OrderInfo.class));
+    }
+
     @AfterEach
     void tearDown() {
     }

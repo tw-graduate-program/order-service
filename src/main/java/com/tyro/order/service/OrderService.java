@@ -26,4 +26,9 @@ public class OrderService {
     public OrderInfo saveOrder(OrderInfo orderInfo) {
         return orderRepository.save(orderInfo);
     }
+
+    public OrderInfo updateById(Long id, OrderInfo orderInfo) {
+        orderInfo.setId(id);
+        return orderRepository.save(orderInfo);
+    }
 }
