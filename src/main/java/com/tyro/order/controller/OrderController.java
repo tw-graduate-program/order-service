@@ -41,4 +41,11 @@ public class OrderController {
                                      @RequestBody OrderInfo orderInfo) {
         return orderService.updateById(id, orderInfo);
     }
+
+    @PostMapping("/{id}/deletion")
+    @ResponseStatus(HttpStatus.OK)
+    public String removeOrderById(@PathVariable Long id) {
+        orderService.removeById(id);
+        return "Succeed!";
+    }
 }

@@ -32,4 +32,7 @@ public class OrderService {
         return orderRepository.save(orderInfo);
     }
 
+    public void removeById(Long id) {
+
+    }
 }

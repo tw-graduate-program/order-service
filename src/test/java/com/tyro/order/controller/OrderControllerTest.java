@@ -140,6 +140,21 @@ class OrderControllerTest {
         verify(orderService).updateById(any(Long.class), any(OrderInfo.class));
     }
 
+    @Test
+    void should_delete_order_by_id() throws Exception {
+        // given
+        Long id = 7L;
+
+        // when
+        mockMvc.perform(post("/orders/{id}/deletion", id)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        // then
+        verify(orderService).removeById(any(Long.class));
+    }
+
     @AfterEach
     void tearDown() {
     }
