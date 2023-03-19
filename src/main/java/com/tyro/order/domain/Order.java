@@ -47,5 +47,6 @@ public class Order {
     private Instant updatedAt;
 
     @JsonIgnore
-    private boolean deleted = false;
+    @Builder.Default
+    private Boolean deleted = Boolean.FALSE;
 }
