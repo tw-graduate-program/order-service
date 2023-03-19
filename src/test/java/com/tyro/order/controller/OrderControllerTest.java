@@ -1,7 +1,7 @@
 package com.tyro.order.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tyro.order.domain.Order;
+import com.tyro.order.domain.OrderInfo;
 import com.tyro.order.service.OrderService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -41,11 +41,11 @@ class OrderControllerTest {
     @MockBean
     private OrderService orderService;
 
-    private Order order;
+    private OrderInfo orderInfo;
 
     @BeforeEach
     void setUp() {
-        order = Order.builder()
+        orderInfo = OrderInfo.builder()
                 .contactId(String.valueOf(777777))
                 .orderType(Integer.valueOf(77))
                 .orderStatus(Integer.valueOf(7))
@@ -57,7 +57,7 @@ class OrderControllerTest {
     @Test
     void should_return_all_orders() throws Exception {
         // given
-        when(orderService.getAllOrders()).thenReturn(List.of(order));
+        when(orderService.getAllOrders()).thenReturn(List.of(orderInfo));
 
         // when
         MvcResult mvcResult = mockMvc.perform(get("/orders")
@@ -68,30 +68,54 @@ class OrderControllerTest {
         String response = mvcResult.getResponse().getContentAsString();
 
         // then
-        assertThat(response).isEqualTo(objectMapper.writeValueAsString(List.of(order)));
+        assertThat(response).isEqualTo(objectMapper.writeValueAsString(List.of(orderInfo)));
         verify(orderService).getAllOrders();
     }
 
     @Test
     void should_return_order_by_id() throws Exception {
         // given
-        String id = "77";
-        order.setId(id);
-        when(orderService.getOrderById(any(String.class))).thenReturn(order);
+        Long id = 77L;
+        orderInfo.setId(id);
+        when(orderService.getOrderById(any(Long.class))).thenReturn(orderInfo);
 
         // when
         mockMvc.perform(get("/orders/{id}", id)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.contactId").value(order.getContactId()))
-                .andExpect(jsonPath("$.orderType").value(order.getOrderType()))
-                .andExpect(jsonPath("$.orderStatus").value(order.getOrderStatus()))
-                .andExpect(jsonPath("$.orderFee").value(order.getOrderFee()))
-                .andExpect(jsonPath("$.deliveryFee").value(order.getDeliveryFee()))
+                .andExpect(jsonPath("$.contactId").value(orderInfo.getContactId()))
+                .andExpect(jsonPath("$.orderType").value(orderInfo.getOrderType()))
+                .andExpect(jsonPath("$.orderStatus").value(orderInfo.getOrderStatus()))
+                .andExpect(jsonPath("$.orderFee").value(orderInfo.getOrderFee()))
+                .andExpect(jsonPath("$.deliveryFee").value(orderInfo.getDeliveryFee()))
                 .andReturn();
 
         // then
         verify(orderService).getOrderById(any());
+    }
+
+    @Test
+    void should_save_order() throws Exception {
+        // given
+        Long id = 77L;
+        orderInfo.setId(id);
+        when(orderService.saveOrder(any(OrderInfo.class))).thenReturn(orderInfo);
+
+        // when
+        mockMvc.perform(post("/orders")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(orderInfo)))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id").isNotEmpty())
+                .andExpect(jsonPath("$.contactId").value(orderInfo.getContactId()))
+                .andExpect(jsonPath("$.orderType").value(orderInfo.getOrderType()))
+                .andExpect(jsonPath("$.orderStatus").value(orderInfo.getOrderStatus()))
+                .andExpect(jsonPath("$.orderFee").value(orderInfo.getOrderFee()))
+                .andExpect(jsonPath("$.deliveryFee").value(orderInfo.getDeliveryFee()))
+                .andReturn();
+
+        // then
+        verify(orderService).saveOrder(any(OrderInfo.class));
     }
 
     @AfterEach

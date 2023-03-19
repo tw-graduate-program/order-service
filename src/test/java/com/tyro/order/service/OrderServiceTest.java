@@ -1,6 +1,6 @@
 package com.tyro.order.service;
 
-import com.tyro.order.domain.Order;
+import com.tyro.order.domain.OrderInfo;
 import com.tyro.order.repository.OrderRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,12 +25,12 @@ class OrderServiceTest {
 
     private OrderService orderService;
 
-    private Order order;
+    private OrderInfo orderInfo;
 
     @BeforeEach
     void setUp() {
         orderService = new OrderService(orderRepository);
-        order = Order.builder()
+        orderInfo = OrderInfo.builder()
                 .contactId(String.valueOf(777777))
                 .orderType(Integer.valueOf(77))
                 .orderStatus(Integer.valueOf(7))
@@ -41,29 +41,44 @@ class OrderServiceTest {
     @Test
     void should_return_all_orders() {
         // given
-        when(orderRepository.findAll()).thenReturn(List.of(order));
+        when(orderRepository.findAll()).thenReturn(List.of(orderInfo));
 
         // when
-        List<Order> orders = orderService.getAllOrders();
+        List<OrderInfo> orderInfos = orderService.getAllOrders();
 
         // then
-        assertThat(orders).isEqualTo(List.of(order));
+        assertThat(orderInfos).isEqualTo(List.of(orderInfo));
         verify(orderRepository).findAll();
     }
 
     @Test
     void should_return_order_by_id() {
         // given
-        String id = String.valueOf(77);
-        order.setId(id);
-        when(orderRepository.findById(any(String.class))).thenReturn(Optional.ofNullable(order));
+        Long id = 77L;
+        orderInfo.setId(id);
+        when(orderRepository.findById(any(Long.class))).thenReturn(Optional.ofNullable(orderInfo));
 
         // when
-        Order orderById = orderService.getOrderById(id);
+        OrderInfo orderInfoById = orderService.getOrderById(id);
 
         // then
-        assertThat(orderById).isEqualTo(order);
-        verify(orderRepository).findById(any(String.class));
+        assertThat(orderInfoById).isEqualTo(orderInfo);
+        verify(orderRepository).findById(any(Long.class));
+    }
+
+    @Test
+    void should_save_order() {
+        // given
+        OrderInfo mockOrderInfo = orderInfo;
+        Long id = 77L;
+        mockOrderInfo.setId(id);
+        when(orderRepository.save(orderInfo)).thenReturn(mockOrderInfo);
+
+        // when
+        OrderInfo actualOrderInfo = orderService.saveOrder(orderInfo);
+
+        // then
+        assertThat(actualOrderInfo.getId()).isNotNull();
     }
 
 }

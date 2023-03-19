@@ -1,6 +1,6 @@
 package com.tyro.order.service;
 
-import com.tyro.order.domain.Order;
+import com.tyro.order.domain.OrderInfo;
 import com.tyro.order.repository.OrderRepository;
 import org.springframework.stereotype.Service;
 
@@ -15,11 +15,15 @@ public class OrderService {
         this.orderRepository = orderRepository;
     }
 
-    public List<Order> getAllOrders() {
+    public List<OrderInfo> getAllOrders() {
         return orderRepository.findAll();
     }
 
-    public Order getOrderById(String id) {
+    public OrderInfo getOrderById(Long id) {
         return orderRepository.findById(id).get();
+    }
+
+    public OrderInfo saveOrder(OrderInfo orderInfo) {
+        return orderRepository.save(orderInfo);
     }
 }

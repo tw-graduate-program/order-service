@@ -1,6 +1,6 @@
 package com.tyro.order.controller;
 
-import com.tyro.order.domain.Order;
+import com.tyro.order.domain.OrderInfo;
 import com.tyro.order.service.OrderService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -19,13 +19,19 @@ public class OrderController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<Order> getAllOrders() {
+    public List<OrderInfo> getAllOrders() {
         return orderService.getAllOrders();
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Order getOrderById(@PathVariable String id) {
+    public OrderInfo getOrderById(@PathVariable Long id) {
         return orderService.getOrderById(id);
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public OrderInfo saveOrder(@RequestBody OrderInfo orderInfo) {
+        return orderService.saveOrder(orderInfo);
     }
 }
