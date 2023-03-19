@@ -18,6 +18,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import java.math.BigDecimal;
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -49,7 +50,8 @@ class OrderControllerTest {
                 .orderType(Integer.valueOf(77))
                 .orderStatus(Integer.valueOf(7))
                 .orderFee(BigDecimal.valueOf(77777))
-                .deliveryFee(BigDecimal.valueOf(77)).build();
+                .deliveryFee(BigDecimal.valueOf(77))
+                .deleted(Boolean.FALSE).build();
     }
 
     @Test
@@ -68,6 +70,28 @@ class OrderControllerTest {
         // then
         assertThat(response).isEqualTo(objectMapper.writeValueAsString(List.of(order)));
         verify(orderService).getAllOrders();
+    }
+
+    @Test
+    void should_return_order_by_id() throws Exception {
+        // given
+        String id = "77";
+        order.setId(id);
+        when(orderService.getOrderById(any(String.class))).thenReturn(order);
+
+        // when
+        mockMvc.perform(get("/orders/{id}", id)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.contactId").value(order.getContactId()))
+                .andExpect(jsonPath("$.orderType").value(order.getOrderType()))
+                .andExpect(jsonPath("$.orderStatus").value(order.getOrderStatus()))
+                .andExpect(jsonPath("$.orderFee").value(order.getOrderFee()))
+                .andExpect(jsonPath("$.deliveryFee").value(order.getDeliveryFee()))
+                .andReturn();
+
+        // then
+        verify(orderService).getOrderById(any());
     }
 
     @AfterEach
