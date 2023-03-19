@@ -5,6 +5,7 @@ import com.tyro.order.service.OrderService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -31,7 +32,7 @@ public class OrderController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public OrderInfo saveOrder(@RequestBody OrderInfo orderInfo) {
+    public OrderInfo saveOrder(@RequestBody @Valid OrderInfo orderInfo) {
         return orderService.saveOrder(orderInfo);
     }
 

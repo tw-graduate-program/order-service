@@ -119,6 +119,27 @@ class OrderControllerTest {
     }
 
     @Test
+    void should_return_400_when_input_invalid() throws Exception {
+        // given
+        OrderInfo order = OrderInfo.builder()
+                .orderType(Integer.valueOf(77))
+                .orderStatus(Integer.valueOf(7))
+                .orderFee(BigDecimal.valueOf(77777))
+                .deliveryFee(BigDecimal.valueOf(77)).build();
+
+        // when
+        mockMvc.perform(post("/orders")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(order)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message").value("Invalid Argument"))
+                .andExpect(jsonPath("$.details.contactId").value("must not be null"))
+                .andReturn();
+
+        // then
+    }
+
+    @Test
     void should_update_order_by_id() throws Exception {
         // given
         Long id = 77L;
