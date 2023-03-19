@@ -47,8 +47,8 @@ class OrderControllerTest {
     void setUp() {
         orderInfo = OrderInfo.builder()
                 .contactId(String.valueOf(777777))
-                .orderType(Integer.valueOf(77))
-                .orderStatus(Integer.valueOf(7))
+                .orderType(77)
+                .orderStatus(7)
                 .orderFee(BigDecimal.valueOf(77777))
                 .deliveryFee(BigDecimal.valueOf(77))
                 .deleted(Boolean.FALSE).build();
@@ -122,8 +122,8 @@ class OrderControllerTest {
     void should_return_400_when_input_invalid() throws Exception {
         // given
         OrderInfo order = OrderInfo.builder()
-                .orderType(Integer.valueOf(77))
-                .orderStatus(Integer.valueOf(7))
+                .orderType(77)
+                .orderStatus(7)
                 .orderFee(BigDecimal.valueOf(77777))
                 .deliveryFee(BigDecimal.valueOf(77)).build();
 

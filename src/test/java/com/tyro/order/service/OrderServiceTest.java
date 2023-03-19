@@ -32,8 +32,8 @@ class OrderServiceTest {
         orderService = new OrderService(orderRepository);
         orderInfo = OrderInfo.builder()
                 .contactId(String.valueOf(777777))
-                .orderType(Integer.valueOf(77))
-                .orderStatus(Integer.valueOf(7))
+                .orderType(77)
+                .orderStatus(7)
                 .orderFee(BigDecimal.valueOf(77777))
                 .deliveryFee(BigDecimal.valueOf(77)).build();
     }
