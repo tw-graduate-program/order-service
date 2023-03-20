@@ -1,4 +1,4 @@
-package com.tyro.order.domain;
+package com.demo.order.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;

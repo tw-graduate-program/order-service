@@ -1,6 +1,6 @@
-package com.tyro.order.repository;
+package com.demo.order.repository;
 
-import com.tyro.order.domain.OrderInfo;
+import com.demo.order.domain.OrderInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

@@ -1,8 +1,8 @@
-package com.tyro.order.controller;
+package com.demo.order.controller;
 
+import com.demo.order.service.OrderService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tyro.order.domain.OrderInfo;
-import com.tyro.order.service.OrderService;
+import com.demo.order.domain.OrderInfo;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

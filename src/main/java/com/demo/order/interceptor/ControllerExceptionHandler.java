@@ -1,6 +1,6 @@
-package com.tyro.order.interceptor;
+package com.demo.order.interceptor;
 
-import com.tyro.order.common.ErrorResult;
+import com.demo.order.common.ErrorResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;

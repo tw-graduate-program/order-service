@@ -1,7 +1,7 @@
-package com.tyro.order.controller;
+package com.demo.order.controller;
 
-import com.tyro.order.domain.OrderInfo;
-import com.tyro.order.service.OrderService;
+import com.demo.order.domain.OrderInfo;
+import com.demo.order.service.OrderService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,4 +1,4 @@
-package com.tyro.order.common;
+package com.demo.order.common;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

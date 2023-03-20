@@ -1,7 +1,7 @@
-package com.tyro.order.service;
+package com.demo.order.service;
 
-import com.tyro.order.domain.OrderInfo;
-import com.tyro.order.repository.OrderRepository;
+import com.demo.order.domain.OrderInfo;
+import com.demo.order.repository.OrderRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
