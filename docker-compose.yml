@@ -12,6 +12,9 @@ services:
       - MYSQL_ROOT_PASSWORD=pass
       - MYSQL_DATABASE=order
   backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
     image: order-service:latest
     container_name: backend
     ports:
