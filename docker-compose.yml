@@ -1,0 +1,33 @@
+version: "3.7"
+
+services:
+  database:
+    image: mysql:latest
+    container_name: db
+    ports:
+      - 3306:3306
+    networks:
+      - default
+    environment:
+      - MYSQL_ROOT_PASSWORD=pass
+      - MYSQL_DATABASE=order
+  backend:
+    image: order-service:latest
+    container_name: backend
+    ports:
+      - 4321:4321
+    depends_on:
+      - database
+    restart: always
+    networks:
+      - default
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://database:3306/order
+      - SPRING_FLYWAY_URL=jdbc:mysql://database:3306/order
+    deploy:
+      restart_policy:
+        delay: 5s
+
+networks:
+  default:
+    driver: bridge
